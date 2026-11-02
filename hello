@@ -1,1 +1,19 @@
-from sympy import *
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+
+def data_generator(n_samples=10, m=1, k=500, mu=5):
+    # Create covariates and response variable
+    t = np.linspace(0, 0.5, num=n_samples) # 1-D
+    np.random.shuffle(t)
+    delta = mu/(2*m)
+    omega_0=np.sqrt(k)
+    omega= np.sqrt(omega_0**2-delta**2)
+    phi=np.arctan(-delta/omega)
+    A= 1/(2*np.cos(phi))
+    y = np.exp(-delta*t*(2*A*np.cos(phi+omega*t))) 
+
+    return t, y
+
+data = data_generator(n_samples=10, m=1, k=500, mu=5)
